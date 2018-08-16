@@ -1,4 +1,4 @@
-# Sample Code for Raspberry Pi
+# Sample Code for Glade/GTK Emulator Projects
 
 This repository contains code for creating an IoTivity-lite server emulator with GUI running on the the host OS. The examples include support for the glade GUI generator tool and GTK.
 
