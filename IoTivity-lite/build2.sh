@@ -8,6 +8,8 @@ eval ${MY_COMMAND}
 #TODO change this to compile from the project source direcotry, but temporarily copy the souce code over.
 MY_COMMAND="cp $CURPWD/src/$PROJNAME.c ${OCFPATH}/iotivity-constrained/apps/device_builder_server.c"
 eval ${MY_COMMAND}
+MY_COMMAND="cp $CURPWD/src/Makefile ${OCFPATH}/iotivity-constrained/port/linux"
+eval ${MY_COMMAND}
 
 #scons resource/examples
 MY_COMMAND="make DYNAMIC=1 IPV4=1 device_builder_server"
