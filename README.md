@@ -45,3 +45,5 @@ A number of convenience scripts have been written to make the development cycle 
     1. Discover, onboard and control the server using OTGC
     2. Discover, onboard and control the server using DeviceSpy
     3. Test the server using CTT
+3. If you want to modify the glade GUI, run glade and open the following file:
+    1. project_name/bin/glade/window_main.glade
