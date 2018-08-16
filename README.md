@@ -31,9 +31,9 @@ Some environment variables may need to be updated. When the curl command is run,
 
 A number of convenience scripts have been written to make the development cycle easier.
 1. Run the following development cycle as needed
-    1. create_project <project name> - create a new project and name it anything you want.
-    2. This isn't a script, but you need to "cd <project name>" to run all the other scripts.
-    3. Copy the setup.sh from the Emulator-Code/emulator/<sample>/ directory to the current project directory
+    1. create_project "project name" - create a new project and name it anything you want.
+    2. This isn't a script, but you need to "cd "project name"" to run all the other scripts.
+    3. Copy the setup.sh from the Emulator-Code/emulator/dimlight/ directory to the current project directory
     4. ./setup.sh - This will load all the necessary stuff to build and run the sample emulator project.
     5. edit_input2.sh - edit the device description input file (<project name>.json) if necessary.
     6. gen2.sh - generate the code, introspection file, PICS file, and onboarding file from the device description file.
