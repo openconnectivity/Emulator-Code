@@ -11,7 +11,7 @@ There is currently one sample project.
 
 To install all the samples described above, just type the following command.
 
-- curl https://openconnectivity.github.io/Emulator-Code/pi-boards/install.sh | bash
+- curl https://openconnectivity.github.io/Emulator-Code/emulator/install.sh | bash
 
 This command will do a number of things:
 
