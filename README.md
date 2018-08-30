@@ -16,20 +16,14 @@ To install all the samples described above, just type the following command.
 This command will do a number of things:
 
 - Clone the Emulator-Code repository (which includes all the sample code described above). Each sample subdirectory includes the following files:
-  - Several updated scripts (ending in "2") that support building projects in any directory.
   - Makefile: A Makefile description file that will manage the compiling and linking of the project.
   - <sample>.json: The JSON device description file that is the input to DeviceBuilder and describes all the resources available on the device. Each of these resources will show up in the source code and introspection file created by DeviceBuilder.
   - <sample>.c: The C code that includes all the resources plus the code to interface to the glade GUI. This code can be copied over the C code created by DeviceBuilder when the gen2.sh script is run in order to control the hardware.
   - Glade source and graphics that will generate the GUI.
 
-One other note:
-
-Some environment variables may need to be updated. When the curl command is run, the ~/.bashrc file will be modified so that these envorinment variables are set on bootup. The system will need ~/.bashrc to be run. The following command should do it.
-- source ~/.bashrc
-
 # Building and Running the samples
 
-A number of convenience scripts have been written to make the development cycle easier.
+A number of convenience scripts have been written to make the development cycle easier. These can be obtained from the Project-Scrips repository (https://github.com/openconnectivity/Project-Scripts).
 1. Run the following development cycle as needed
     1. create_project project_name - create a new project and name it anything you want.
     2. This isn't a script, but you need to "cd project_name" to run all the other scripts.
