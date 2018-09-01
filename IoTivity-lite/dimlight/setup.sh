@@ -2,7 +2,7 @@
 CURPWD=`pwd`
 PROJNAME=${PWD##*/}
 
-MY_COMMAND="cp ${EXAMPLEPATH}/Emulator-Code/IoTivity-lite/dimlight/Makefile $CURPWD/src/"
+MY_COMMAND="cp ${EXAMPLEPATH}/Emulator-Code/IoTivity-lite/dimlight/Makefile $CURPWD/"
 eval ${MY_COMMAND}
 MY_COMMAND="cp ${EXAMPLEPATH}/Emulator-Code/emulator/dimlight/dimlight.json $CURPWD/$PROJNAME.json"
 eval ${MY_COMMAND}
