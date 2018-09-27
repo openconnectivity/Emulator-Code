@@ -13,6 +13,13 @@
       "remove_properties" : [ "range", "step", "value", "id", "precision" ]
     },
     {
+      "path" : "/oic/d",
+      "n" : "Emulator Light",
+      "rt"   : [ "oic.wk.d", "oic.d.light" ],
+      "if"   : ["oic.if.baseline", "oic.if.r" ],
+      "remove_properties" : [ "n", "range", "value", "step", "precision", "vid"  ]
+    },
+    {
       "path" : "/oic/p",
       "rt"   : [ "oic.wk.p" ],
       "if"   : ["oic.if.baseline", "oic.if.r" ],
