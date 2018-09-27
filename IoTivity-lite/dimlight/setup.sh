@@ -2,15 +2,9 @@
 CURPWD=`pwd`
 PROJNAME=${PWD##*/}
 
-MY_COMMAND="cp ${EXAMPLEPATH}/Emulator-Code/IoTivity-lite/dimlight/Makefile $CURPWD/"
-eval ${MY_COMMAND}
-MY_COMMAND="cp ${EXAMPLEPATH}/Emulator-Code/emulator/dimlight/dimlight.json $CURPWD/$PROJNAME.json"
-eval ${MY_COMMAND}
-MY_COMMAND="cp ${EXAMPLEPATH}/Emulator-Code/IoTivity-lite/dimlight/dimlight.c $CURPWD/src/$PROJNAME.c"
-eval ${MY_COMMAND}
-MY_COMMAND="cp ${EXAMPLEPATH}/Emulator-Code/IoTivity-lite/dimlight/dimlight.c.gen $CURPWD/src/$PROJNAME.c.gen"
-eval ${MY_COMMAND}
-MY_COMMAND="mkdir $CURPWD/bin/glade/"
-eval ${MY_COMMAND}
-MY_COMMAND="cp ${EXAMPLEPATH}/Emulator-Code/emulator/dimlight/glade/* $CURPWD/bin/glade/"
-eval ${MY_COMMAND}
+cp ${EXAMPLEPATH}/Emulator-Code/IoTivity-lite/dimlight/Makefile ${CURPWD}/
+cp ${EXAMPLEPATH}/Emulator-Code/emulator/dimlight/dimlight.json ${CURPWD}/${PROJNAME}.json
+cp ${EXAMPLEPATH}/Emulator-Code/IoTivity-lite/dimlight/dimlight.c ${CURPWD}/src/${PROJNAME}.c
+cp ${EXAMPLEPATH}/Emulator-Code/IoTivity-lite/dimlight/dimlight-gen.c ${CURPWD}/src/${PROJNAME}-gen.c
+mkdir ${CURPWD}/bin/glade/
+cp ${EXAMPLEPATH}/Emulator-Code/emulator/dimlight/glade/* ${CURPWD}/bin/glade/

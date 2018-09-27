@@ -27,10 +27,9 @@ fi
 
 git clone https://github.com/openconnectivity/Emulator-Code.git
 
-MY_COMMAND="cp ./Emulator-Code/IoTivity-lite/*.sh ${OCFPATH}/../iot-lite/"
-eval ${MY_COMMAND}
+cp ./Emulator-Code/IoTivity-lite/*.sh ${OCFPATH}/../iot-lite/
 
 sudo apt-get -y install glade
 sudo apt-get -y install libgtk-3-dev
 
-cd $CURPWD
+cd ${CURPWD}
