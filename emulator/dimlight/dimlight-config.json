@@ -1,5 +1,21 @@
-[
-
+{
+  "friendly_name" : "Emulator",
+  "implementations" : [
+    "/iot", "/iot-lite"
+  ],
+  "platforms" : [
+    "armv6l", "armv7l"
+  ],
+  "device_types" : [
+    {
+      "path" : "/oic/d",
+      "n" : "Emulator",
+      "rt" : ["oic.wk.d", "oic.d.light"],
+      "if" : ["oic.if.baseline", "oic.if.r"],
+      "remove_properties" : ["n", "range", "value", "step", "precision", "vid"]
+    }
+  ],
+  "device_description" : [
     {
       "path" : "/binaryswitch",
       "rt"   : [ "oic.r.switch.binary" ],
@@ -18,4 +34,5 @@
       "if"   : ["oic.if.baseline", "oic.if.r" ],
       "remove_properties" : [ "n", "range", "value", "step", "precision", "vid"  ]
     }
-]
+  ]
+}
