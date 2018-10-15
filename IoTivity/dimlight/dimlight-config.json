@@ -3,8 +3,8 @@
   "device_type" : "oic.d.emulatorsample",
   "ocf_base_path" : "~",
   "implementation_paths" : [
-    "/iot-lite",
     "/iot",
+    "/iot-lite",
     "~/new-imp"
   ],
   "platforms" : [
