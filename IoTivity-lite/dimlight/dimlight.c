@@ -589,9 +589,9 @@ signal_event_loop(void)
   /* ??? not sure if I call this on every loop now - ask Kishen */
   g_timeout_add(0, oc_event_loop, 0);
 
-  pthread_mutex_lock(&mutex);
-  pthread_cond_signal(&cv);
-  pthread_mutex_unlock(&mutex);
+//  pthread_mutex_lock(&mutex);
+//  pthread_cond_signal(&cv);
+//  pthread_mutex_unlock(&mutex);
 }
 #endif
 
@@ -603,8 +603,8 @@ void
 handle_signal(int signal)
 {
   (void)signal;
-  signal_event_loop();
-  quit = 1;
+//  signal_event_loop();
+//  quit = 1;
 
   #ifdef __linux__
   gtk_main_quit();
@@ -742,7 +742,8 @@ int init;
 #ifdef __linux__
   /* linux specific loop */
   gtk_main();
-  
+
+/*
   while (quit != 1) {
     next_event = oc_main_poll();
     pthread_mutex_lock(&mutex);
@@ -755,6 +756,7 @@ int init;
     }
     pthread_mutex_unlock(&mutex);
   }
+*/
 #endif
 
   /* shut down the stack */
