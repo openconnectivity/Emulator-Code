@@ -69,11 +69,6 @@ GtkWidget *g_my_image_0;
 GtkWidget *g_my_image_33;
 GtkWidget *g_my_image_66;
 GtkWidget *g_my_image_100;
-
-#include <pthread.h>
-static pthread_mutex_t mutex;
-static pthread_cond_t cv;
-static struct timespec ts;
 #endif
 
 #ifdef WIN32
@@ -127,7 +122,7 @@ static char g_lightstate_RESOURCE_INTERFACE[][MAX_STRING] = {"oic.if.a","oic.if.
 int g_lightstate_nr_resource_interfaces = 2;
 
 #ifdef __linux__
-// display the light with the specified brightness
+/* display the light with the specified brightness */
 void display_light(int percent)
 {
   int image_number;
@@ -427,7 +422,6 @@ post_dimming(oc_request_t *request, oc_interface_mask_t interfaces, void *user_d
     PRINT("key: (check) %s \n", oc_string(rep->name));
     if (strcmp ( oc_string(rep->name), g_dimming_RESOURCE_PROPERTY_NAME_dimmingSetting) == 0) {
       /* property "dimmingSetting" of type integer exist in payload */
-      int value = rep->value.integer;
       if (rep->type != OC_REP_INT) {
         error_state = true;
         PRINT ("   property 'dimmingSetting' is not of type int %d \n", rep->type);
@@ -586,12 +580,7 @@ int oc_event_loop(void *arg);
 static void
 signal_event_loop(void)
 {
-  /* ??? not sure if I call this on every loop now - ask Kishen */
   g_timeout_add(0, oc_event_loop, 0);
-
-//  pthread_mutex_lock(&mutex);
-//  pthread_cond_signal(&cv);
-//  pthread_mutex_unlock(&mutex);
 }
 #endif
 
@@ -603,8 +592,6 @@ void
 handle_signal(int signal)
 {
   (void)signal;
-//  signal_event_loop();
-//  quit = 1;
 
   #ifdef __linux__
   gtk_main_quit();
@@ -625,6 +612,12 @@ oc_event_loop(void *arg)
   }
 
   return FALSE;
+}
+
+/* called when window is closed */
+void on_window_main_destroy()
+{
+  handle_signal(0);
 }
 #endif
 
@@ -669,7 +662,7 @@ int init;
   window = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
   gtk_builder_connect_signals(builder, NULL);
 
-  // get pointers to the 4 images
+  /* get pointers to the 4 images */
   g_my_image_0 = GTK_WIDGET(gtk_builder_get_object(builder, "my_image_0"));
   g_my_image_33 = GTK_WIDGET(gtk_builder_get_object(builder, "my_image_33"));
   g_my_image_66 = GTK_WIDGET(gtk_builder_get_object(builder, "my_image_66"));
@@ -705,8 +698,6 @@ int init;
                                        .requests_entry = 0
 #endif
                                        };
-  oc_clock_time_t next_event;
-
   PRINT("Used input file : \"/home/cstevens1/workspace/emulatornew/device_output/out_codegeneration_merged.swagger.json\"\n");
   PRINT("OCF Server name : \"Dimming\"\n");
 
