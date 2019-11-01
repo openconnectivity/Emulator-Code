@@ -17,7 +17,7 @@
       "path" : "/lightstate",
       "rt"   : [ "oic.r.light.dimming" ],
       "if"   : ["oic.if.a", "oic.if.baseline" ],
-      "remove_properties" : [ "rangecd ", "step", "value", "id", "precision" ],
+      "remove_properties" : [ "range", "step", "value", "id", "precision" ],
       "remove_methods" : ["post"]
     },
     {
@@ -30,7 +30,8 @@
       "path" : "/dimming",
       "rt"   : [ "oic.r.light.dimming" ],
       "if"   : ["oic.if.a", "oic.if.baseline" ],
-      "remove_properties" : [ "range", "step", "value", "id", "precision" ]
+      "remove_properties" : [ "range", "step", "value", "id", "precision" ],
+      "remove_methods" : ["post"]
     },
     {
       "path" : "/oic/p",
