@@ -10,7 +10,7 @@ include Makefile
 # typical addition of LIBS
 #
 #LIBS += `-lmylib`
-LIBS += `-gtk+-3.0`
+LIBS += `pkg-config --cflags --libs gtk+-3.0`
 
 
 #
