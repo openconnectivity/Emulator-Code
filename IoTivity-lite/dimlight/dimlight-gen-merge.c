@@ -62,6 +62,16 @@
 #include <signal.h>
 
 #ifdef __linux__
+#include <gtk/gtk.h>
+
+/* linux specific code */
+GtkWidget *g_my_image_0;
+GtkWidget *g_my_image_33;
+GtkWidget *g_my_image_66;
+GtkWidget *g_my_image_100;
+#endif
+
+#ifdef __linux__
 /* linux specific code */
 #include <pthread.h>
 static pthread_mutex_t mutex;
@@ -716,6 +726,33 @@ signal_event_loop(void)
   WakeConditionVariable(&cv);
 }
 #endif
+
+#ifdef __linux__
+int oc_event_loop(void *arg);
+
+int
+oc_event_loop(void *arg)
+{
+  (void)arg;
+
+  oc_clock_time_t next_event;
+
+  next_event = oc_main_poll();
+  if (next_event != 0) {
+    g_timeout_add((next_event - oc_clock_time()) / 1.e03, oc_event_loop, 0);
+  }
+
+  return FALSE;
+}
+
+/* called when window is closed */
+void on_window_main_destroy()
+{
+  exit(0);
+//  handle_signal(0);
+}
+#endif
+
 #ifdef __linux__
 /**
 * signal the event loop (Linux)
@@ -815,7 +852,7 @@ initialize_variables(void)
 * shuts down the stack
 */
 int
-main(void)
+main(int argc, char *argv[])
 {
 int init;
   oc_clock_time_t next_event;
@@ -835,6 +872,33 @@ int init;
   sa.sa_handler = handle_signal;
   /* install Ctrl-C */
   sigaction(SIGINT, &sa, NULL);
+#endif
+
+#ifdef __linux__
+  GtkBuilder *builder;
+  GtkWidget *window;
+
+  g_timeout_add(0, oc_event_loop, 0);
+
+  gtk_init(&argc, &argv);
+
+  builder = gtk_builder_new();
+  gtk_builder_add_from_file (builder, "glade/window_main.glade", NULL);
+
+  window = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
+  gtk_builder_connect_signals(builder, NULL);
+
+  /* get pointers to the 4 images */
+  g_my_image_0 = GTK_WIDGET(gtk_builder_get_object(builder, "my_image_0"));
+  g_my_image_33 = GTK_WIDGET(gtk_builder_get_object(builder, "my_image_33"));
+  g_my_image_66 = GTK_WIDGET(gtk_builder_get_object(builder, "my_image_66"));
+  g_my_image_100 = GTK_WIDGET(gtk_builder_get_object(builder, "my_image_100"));
+
+  g_object_unref(builder);
+
+  gtk_widget_show(g_my_image_0);
+
+  gtk_widget_show(window);
 #endif
 
   PRINT("Used input file : \"/home/cstevens1/workspace/emu4/device_output/out_codegeneration_merged.swagger.json\"\n");
@@ -898,6 +962,8 @@ int init;
 
 #ifdef __linux__
   /* linux specific loop */
+  gtk_main();
+
   while (quit != 1) {
     next_event = oc_main_poll();
     pthread_mutex_lock(&mutex);
@@ -910,6 +976,8 @@ int init;
     }
     pthread_mutex_unlock(&mutex);
   }
+
+  gtk_main_quit();
 #endif
 
   /* shut down the stack */
