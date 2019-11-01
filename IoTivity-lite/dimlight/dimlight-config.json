@@ -1,6 +1,6 @@
 {
-  "friendly_name" : "Emulator Lite",
-  "device_type" : "oic.d.emulatorsample",
+  "friendly_name" : "Emulator",
+  "device_type" : "oic.d.emulator",
   "ocf_base_path" : "~",
   "implementation_paths" : [
     "/iot-lite",
