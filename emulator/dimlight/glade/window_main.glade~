@@ -1,108 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.0 -->
+<!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkWindow" id="window_main">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Hello World</property>
+    <property name="title" translatable="yes">Light</property>
+    <property name="resizable">False</property>
     <signal name="destroy" handler="on_window_main_destroy" swapped="no"/>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkFixed">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <child>
-          <object class="GtkLabel" id="lbl_hello">
-            <property name="width_request">100</property>
-            <property name="height_request">30</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Hello</property>
-          </object>
-          <packing>
-            <property name="x">23</property>
-            <property name="y">14</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="lbl_count">
-            <property name="width_request">100</property>
-            <property name="height_request">30</property>
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Count</property>
-          </object>
-          <packing>
-            <property name="x">149</property>
-            <property name="y">13</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage" id="my_image_0">
-            <property name="width_request">100</property>
-            <property name="height_request">80</property>
-            <property name="can_focus">False</property>
-            <property name="pixbuf">../light_server/animated-light-bulb-gif-0.gif</property>
-          </object>
-          <packing>
-            <property name="x">50</property>
-            <property name="y">100</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="btn_hello">
-            <property name="label" translatable="yes">Hello</property>
-            <property name="width_request">100</property>
-            <property name="height_request">30</property>
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <signal name="clicked" handler="on_btn_hello_clicked" swapped="no"/>
-          </object>
-          <packing>
-            <property name="x">100</property>
-            <property name="y">250</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkImage" id="my_image_33">
             <property name="width_request">100</property>
             <property name="height_request">80</property>
             <property name="can_focus">False</property>
-            <property name="pixbuf">../light_server/animated-light-bulb-gif-33.gif</property>
+            <property name="pixbuf">animated-light-bulb-gif-33.gif</property>
           </object>
-          <packing>
-            <property name="x">50</property>
-            <property name="y">100</property>
-          </packing>
         </child>
         <child>
           <object class="GtkImage" id="my_image_66">
             <property name="width_request">100</property>
             <property name="height_request">80</property>
             <property name="can_focus">False</property>
-            <property name="pixbuf">../light_server/animated-light-bulb-gif-66.gif</property>
+            <property name="pixbuf">animated-light-bulb-gif-66.gif</property>
           </object>
-          <packing>
-            <property name="x">50</property>
-            <property name="y">100</property>
-          </packing>
         </child>
         <child>
           <object class="GtkImage" id="my_image_100">
             <property name="width_request">100</property>
             <property name="height_request">80</property>
             <property name="can_focus">False</property>
-            <property name="pixbuf">../light_server/animated-light-bulb-gif-100.gif</property>
+            <property name="pixbuf">animated-light-bulb-gif-100.gif</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkImage" id="my_image_0">
+            <property name="width_request">100</property>
+            <property name="height_request">80</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="pixbuf">animated-light-bulb-gif-0.gif</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="my_switch">
+            <property name="width_request">80</property>
+            <property name="height_request">20</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="active">True</property>
           </object>
           <packing>
-            <property name="x">50</property>
-            <property name="y">100</property>
+            <property name="x">9</property>
+            <property name="y">112</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScale" id="my_slider">
+            <property name="name">dimmer</property>
+            <property name="width_request">25</property>
+            <property name="height_request">125</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="show_fill_level">True</property>
+            <property name="round_digits">1</property>
+            <property name="digits">0</property>
+            <property name="draw_value">False</property>
+          </object>
+          <packing>
+            <property name="x">100</property>
+            <property name="y">10</property>
           </packing>
         </child>
       </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
     </child>
   </object>
 </interface>
