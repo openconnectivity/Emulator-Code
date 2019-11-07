@@ -40,7 +40,7 @@ GtkWidget *g_my_image_66;
 GtkWidget *g_my_image_100;
 #endif
 
-#include "dimlight.c"
+#include "device_builder_server.c"
 
 #ifdef WIN32
 /**
