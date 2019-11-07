@@ -111,39 +111,6 @@ int g_lightstate_nr_resource_types = 1;
 static char g_lightstate_RESOURCE_INTERFACE[][MAX_STRING] = {"oic.if.a","oic.if.baseline"}; /* interface if (as an array) */
 int g_lightstate_nr_resource_interfaces = 2;
 
-#ifdef __linux__
-/* display the light with the specified brightness */
-void display_light(int percent)
-{
-  int image_number;
-
-  gtk_widget_hide(g_my_image_0);
-  gtk_widget_hide(g_my_image_33);
-  gtk_widget_hide(g_my_image_66);
-  gtk_widget_hide(g_my_image_100);
-
-  image_number = percent / 25;
-  if (image_number > 3) {
-    image_number = 3;
-  }
-
-  switch (image_number) {
-    case 0:
-      gtk_widget_show(g_my_image_0);
-      break;
-    case 1:
-      gtk_widget_show(g_my_image_33);
-      break;
-    case 2:
-      gtk_widget_show(g_my_image_66);
-      break;
-    case 3:
-      gtk_widget_show(g_my_image_100);
-      break;
-  }
-}
-#endif
-
 /**
 * function to set up the device.
 *
@@ -745,4 +712,4 @@ int init;
   oc_main_shutdown();
   return 0;
 }
-#endif NO_MAIN
+#endif /*NO_MAIN*/

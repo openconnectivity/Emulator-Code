@@ -26,10 +26,6 @@
  title of input_file   : Dimming
 */
 
-#include "oc_api.h"
-#include "port/oc_clock.h"
-#include <signal.h>
-
 #include <gtk/gtk.h>
 
 #ifdef __linux__
@@ -38,6 +34,39 @@ GtkWidget *g_my_image_0;
 GtkWidget *g_my_image_33;
 GtkWidget *g_my_image_66;
 GtkWidget *g_my_image_100;
+#endif
+
+#ifdef __linux__
+/* display the light with the specified brightness */
+void display_light(int percent)
+{
+  int image_number;
+
+  gtk_widget_hide(g_my_image_0);
+  gtk_widget_hide(g_my_image_33);
+  gtk_widget_hide(g_my_image_66);
+  gtk_widget_hide(g_my_image_100);
+
+  image_number = percent / 25;
+  if (image_number > 3) {
+    image_number = 3;
+  }
+
+  switch (image_number) {
+    case 0:
+      gtk_widget_show(g_my_image_0);
+      break;
+    case 1:
+      gtk_widget_show(g_my_image_33);
+      break;
+    case 2:
+      gtk_widget_show(g_my_image_66);
+      break;
+    case 3:
+      gtk_widget_show(g_my_image_100);
+      break;
+  }
+}
 #endif
 
 #include "device_builder_server.c"
