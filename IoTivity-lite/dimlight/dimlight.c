@@ -61,16 +61,6 @@
 #include "port/oc_clock.h"
 #include <signal.h>
 
-#include <gtk/gtk.h>
-
-#ifdef __linux__
-/* linux specific code */
-GtkWidget *g_my_image_0;
-GtkWidget *g_my_image_33;
-GtkWidget *g_my_image_66;
-GtkWidget *g_my_image_100;
-#endif
-
 #ifdef WIN32
 /* windows specific code */
 #include <windows.h>
