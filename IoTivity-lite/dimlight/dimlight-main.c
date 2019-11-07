@@ -133,6 +133,70 @@ void on_window_main_destroy()
 }
 #endif
 
+#ifdef OC_SECURITY
+void
+random_pin_cb(const unsigned char *pin, size_t pin_len, void *data)
+{
+  (void)data;
+  PRINT("\n====================\n");
+  PRINT("Random PIN: %.*s\n", (int)pin_len, pin);
+  PRINT("====================\n");
+}
+#endif /* OC_SECURITY */
+
+void
+factory_presets_cb(size_t device, void *data)
+{
+  (void)device;
+  (void)data;
+#if defined(OC_SECURITY) && defined(OC_PKI)
+/* code to include an pki certificate and root trust anchor */
+#include "oc_pki.h"
+#include "pki_certs.h"
+  int credid =
+    oc_pki_add_mfg_cert(0, (const unsigned char *)my_cert, strlen(my_cert), (const unsigned char *)my_key, strlen(my_key));
+  if (credid < 0) {
+    PRINT("ERROR installing manufacturer certificate\n");
+  } else {
+    PRINT("Successfully installed manufacturer certificate\n");
+  }
+
+  if (oc_pki_add_mfg_intermediate_cert(0, credid, (const unsigned char *)int_ca, strlen(int_ca)) < 0) {
+    PRINT("ERROR installing intermediate CA certificate\n");
+  } else {
+    PRINT("Successfully installed intermediate CA certificate\n");
+  }
+
+  if (oc_pki_add_mfg_trust_anchor(0, (const unsigned char *)root_ca, strlen(root_ca)) < 0) {
+    PRINT("ERROR installing root certificate\n");
+  } else {
+    PRINT("Successfully installed root certificate\n");
+  }
+
+  oc_pki_set_security_profile(0, OC_SP_BLACK, OC_SP_BLACK, credid);
+#endif /* OC_SECURITY && OC_PKI */
+}
+
+
+/**
+* intializes the global variables
+* registers and starts the handler
+
+*/
+void
+initialize_variables(void)
+{
+  /* initialize global variables for resource "/binaryswitch" */  g_binaryswitch_value = false; /* current value of property "value" The status of the switch. */
+  /* initialize global variables for resource "/dimming" */
+  g_dimming_dimmingSetting = 30; /* current value of property "dimmingSetting" The current dimming value. */
+  /* initialize global variables for resource "/lightstate" */
+  g_lightstate_dimmingSetting = 30; /* current value of property "dimmingSetting" The current dimming value. */
+
+  /* set the flag for NO oic/con resource. */
+  oc_set_con_res_announced(false);
+
+}
+
 /**
 * main application.
 * intializes the global variables
@@ -152,6 +216,7 @@ int init;
   /* install Ctrl-C */
   signal(SIGINT, handle_signal);
 #endif
+
 #ifdef __linux__
   /* linux specific */
   struct sigaction sa;
@@ -186,20 +251,13 @@ int init;
 
   gtk_widget_show(window);
 #endif
-  /* initialize global variables for resource "/binaryswitch" */
-  g_binaryswitch_value = false; /* current value of property "value" The status of the switch. */
 
-  /* initialize global variables for resource "/dimming" */
-  g_dimming_dimmingSetting = 30; /* current value of property "dimmingSetting" The current dimming value. */
+  PRINT("Used input file : \"/home/cstevens1/workspace/gentest/device_output/out_codegeneration_merged.swagger.json\"\n");
+  PRINT("OCF Server name : \"Emulator\"\n");
 
-  /* initialize global variables for resource "/lightstate" */
-  g_lightstate_dimmingSetting = 30; /* current value of property "dimmingSetting" The current dimming value. */
-  /* initialize array "range" : The valid range for the value Property in integer */
-  g_lightstate_range[0] = 0;
-  g_lightstate_range[1] = 100;
-  g_lightstate_range_array_size = 2;
-  /* set the flag for NO oic/con resource. */
-  oc_set_con_res_announced(false);
+  /*intialize the variables */
+  initialize_variables();
+
 
   /* initializes the handlers structure */
   static const oc_handler_t handler = {.init = app_init,
@@ -210,21 +268,32 @@ int init;
                                        .requests_entry = 0
 #endif
                                        };
-  PRINT("Used input file : \"/home/cstevens1/workspace/emulatornew/device_output/out_codegeneration_merged.swagger.json\"\n");
-  PRINT("OCF Server name : \"Dimming\"\n");
 
 #ifdef OC_SECURITY
   PRINT("Intialize Secure Resources\n");
-  oc_storage_config("./device_builder_server_creds/");
+  oc_storage_config("./devicebuilderserver_creds");
 #endif /* OC_SECURITY */
+
+#ifdef OC_SECURITY
+  /* please comment out if the server:
+    - have no display capabilities to display the PIN value
+    - server does not require to implement RANDOM PIN (oic.sec.doxm.rdp) onboarding mechanism
+  */
+  oc_set_random_pin_callback(random_pin_cb, NULL);
+#endif /* OC_SECURITY */
+
+  oc_set_factory_presets_cb(factory_presets_cb, NULL);
 
 
   /* start the stack */
   init = oc_main_init(&handler);
-  if (init < 0)
-    return init;
 
-  PRINT("OCF server \"Dimming\" running, waiting on incomming connections.\n");
+  if (init < 0) {
+    PRINT("oc_main_init failed %d, exiting.\n", init);
+    return init;
+  }
+
+  PRINT("OCF server \"Emulator\" running, waiting on incoming connections.\n");
 
 #ifdef WIN32
   /* windows specific loop */
@@ -245,21 +314,6 @@ int init;
 #ifdef __linux__
   /* linux specific loop */
   gtk_main();
-
-/*
-  while (quit != 1) {
-    next_event = oc_main_poll();
-    pthread_mutex_lock(&mutex);
-    if (next_event == 0) {
-      pthread_cond_wait(&cv, &mutex);
-    } else {
-      ts.tv_sec = (next_event / OC_CLOCK_SECOND);
-      ts.tv_nsec = (next_event % OC_CLOCK_SECOND) * 1.e09 / OC_CLOCK_SECOND;
-      pthread_cond_timedwait(&cv, &mutex, &ts);
-    }
-    pthread_mutex_unlock(&mutex);
-  }
-*/
 #endif
 
   /* shut down the stack */
