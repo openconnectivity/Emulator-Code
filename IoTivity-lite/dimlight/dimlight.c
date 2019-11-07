@@ -559,6 +559,7 @@ register_resources(void)
   oc_add_resource(res_lightstate);
 }
 
+#ifndef NO_MAIN
 #ifdef WIN32
 /**
 * signal the event loop (windows version)
@@ -754,3 +755,4 @@ int init;
   oc_main_shutdown();
   return 0;
 }
+#endif NO_MAIN
