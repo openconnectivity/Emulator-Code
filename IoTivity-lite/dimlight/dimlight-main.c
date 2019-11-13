@@ -30,10 +30,13 @@
 
 #ifdef __linux__
 /* linux specific code */
-GtkWidget *g_my_image_0;
-GtkWidget *g_my_image_33;
-GtkWidget *g_my_image_66;
-GtkWidget *g_my_image_100;
+GtkWidget*	g_my_image_0;
+GtkWidget*	g_my_image_33;
+GtkWidget*	g_my_image_66;
+GtkWidget*	g_my_image_100;
+GtkSwitch*	g_my_switch;
+GtkRange*	g_my_slider;
+GtkAdjustment*	g_my_adjustment;
 #endif
 
 #ifdef __linux__
@@ -47,10 +50,21 @@ void display_light(int percent)
   gtk_widget_hide(g_my_image_66);
   gtk_widget_hide(g_my_image_100);
 
-  image_number = percent / 25;
-  if (image_number > 3) {
+  image_number = percent / 50 + 1;
+  if (image_number >= 3) {
     image_number = 3;
   }
+
+  if (percent == 100)
+    image_number = 3;
+  else if (percent == 0)
+    image_number = 0;
+
+  gtk_adjustment_set_value(g_my_adjustment, percent);
+  if (percent == 0)
+    gtk_switch_set_active(g_my_switch, FALSE);
+  else
+    gtk_switch_set_active(g_my_switch, TRUE);
 
   switch (image_number) {
     case 0:
@@ -66,6 +80,47 @@ void display_light(int percent)
       gtk_widget_show(g_my_image_100);
       break;
   }
+}
+
+/**
+* handle GTK my_switch
+*/
+void on_my_switch_activate(GtkSwitch* theSwitch)
+{
+  gboolean switchState;
+
+  switchState = gtk_switch_get_state(theSwitch);
+
+  /* make any necessary changes in other widgets */
+  if (switchState) {
+    gtk_adjustment_set_value(g_my_adjustment, 100);
+    display_light(100);
+  }
+  else {
+    gtk_adjustment_set_value(g_my_adjustment, 0);
+    display_light(0);
+  }
+}
+
+/**
+* handle GTK my_slider
+*/
+void on_my_slider_move_slider(GtkRange *theSlider)
+{
+  gdouble sliderValue;
+
+  sliderValue = gtk_range_get_value(theSlider);
+
+  /* make any necessary changes in other widgets */
+  display_light(sliderValue);
+  if (sliderValue == 100) {
+    gtk_switch_set_active(g_my_switch, TRUE);
+  }
+  else if (sliderValue == 0) {
+    gtk_switch_set_active(g_my_switch, FALSE);
+  }
+
+  display_light(sliderValue);
 }
 #endif
 
@@ -188,13 +243,13 @@ initialize_variables(void)
 {
   /* initialize global variables for resource "/binaryswitch" */  g_binaryswitch_value = false; /* current value of property "value" The status of the switch. */
   /* initialize global variables for resource "/dimming" */
-  g_dimming_dimmingSetting = 30; /* current value of property "dimmingSetting" The current dimming value. */
+  g_dimming_dimmingSetting = 0; /* current value of property "dimmingSetting" The current dimming value. */
   /* initialize global variables for resource "/lightstate" */
-  g_lightstate_dimmingSetting = 30; /* current value of property "dimmingSetting" The current dimming value. */
+  g_lightstate_dimmingSetting = 0; /* current value of property "dimmingSetting" The current dimming value. */
+  g_binaryswitch_value = false;
 
   /* set the flag for NO oic/con resource. */
   oc_set_con_res_announced(false);
-
 }
 
 /**
@@ -245,8 +300,16 @@ int init;
   g_my_image_66 = GTK_WIDGET(gtk_builder_get_object(builder, "my_image_66"));
   g_my_image_100 = GTK_WIDGET(gtk_builder_get_object(builder, "my_image_100"));
 
+  /* get pointers to the button, slider and adjustment */
+  g_my_switch = GTK_SWITCH(gtk_builder_get_object(builder, "my_switch"));
+  g_my_slider = GTK_RANGE(gtk_builder_get_object(builder, "my_slider"));
+  g_my_adjustment = GTK_ADJUSTMENT(gtk_builder_get_object(builder, "my_adjustment"));
+
   g_object_unref(builder);
 
+  /* set the initial values on the gui */
+  gtk_switch_set_state(g_my_switch, false);
+  gtk_adjustment_set_value(g_my_adjustment, 0);
   gtk_widget_show(g_my_image_0);
 
   gtk_widget_show(window);

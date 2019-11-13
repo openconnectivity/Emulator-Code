@@ -6,7 +6,7 @@ include Makefile
 # typical addition of CFLAGS
 #
 #CFLAGS += `pkg-config --cflags python`
-CFLAGS += -DNO_MAIN
+CFLAGS += -DNO_MAIN -rdynamic
 
 # typical addition of LIBS
 #

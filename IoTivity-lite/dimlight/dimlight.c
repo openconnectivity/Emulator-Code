@@ -93,10 +93,10 @@ static char g_binaryswitch_RESOURCE_PROPERTY_NAME_value[] = "value"; /* the name
 bool g_binaryswitch_value = false; /* current value of property "value" The status of the switch. */
 /* global property variables for path: "/dimming" */
 static char g_dimming_RESOURCE_PROPERTY_NAME_dimmingSetting[] = "dimmingSetting"; /* the name for the attribute */
-int g_dimming_dimmingSetting = 30; /* current value of property "dimmingSetting" The current dimming value. */
+int g_dimming_dimmingSetting = 0; /* current value of property "dimmingSetting" The current dimming value. */
 /* global property variables for path: "/lightstate" */
 static char g_lightstate_RESOURCE_PROPERTY_NAME_dimmingSetting[] = "dimmingSetting"; /* the name for the attribute */
-int g_lightstate_dimmingSetting = 30; /* current value of property "dimmingSetting" The current dimming value. *//* registration data variables for the resources */
+int g_lightstate_dimmingSetting = 0; /* current value of property "dimmingSetting" The current dimming value. *//* registration data variables for the resources */
 
 /* global resource variables for path: /binaryswitch */
 static char g_binaryswitch_RESOURCE_ENDPOINT[] = "/binaryswitch"; /* used path for this resource */
@@ -208,6 +208,8 @@ get_binaryswitch(oc_request_t *request, oc_interface_mask_t interfaces, void *us
 
      The implementation always return everything that belongs to the resource.
      this implementation is not optimal, but is functionally correct and will pass CTT1.2.2 */
+  g_binaryswitch_value = gtk_switch_get_active(g_my_switch);
+
   bool error_state = false;
 
 
@@ -262,6 +264,8 @@ get_dimming(oc_request_t *request, oc_interface_mask_t interfaces, void *user_da
 
      The implementation always return everything that belongs to the resource.
      this implementation is not optimal, but is functionally correct and will pass CTT1.2.2 */
+  g_dimming_dimmingSetting = gtk_adjustment_get_value(g_my_adjustment);
+
   bool error_state = false;
 
 
@@ -920,4 +924,5 @@ int init;
   oc_main_shutdown();
   return 0;
 }
-#endif /* NO_MAIN */
+#endif
+/* NO_MAIN */
