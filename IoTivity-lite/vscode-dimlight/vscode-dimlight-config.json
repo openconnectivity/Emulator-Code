@@ -1,14 +1,14 @@
 {
-  "friendly_name" : "Emulator Lite",
-  "device_type" : "oic.d.emulatorsample",
+  "friendly_name" : "Emulator",
+  "device_type" : "oic.d.emulator",
   "ocf_base_path" : "~",
   "implementation_paths" : [
-    "/iot",
     "/iot-lite",
     "~/new-imp"
   ],
   "platforms" : [
     "linux",
+    "esp32",
     "windows",
     "android"
   ],
@@ -17,8 +17,7 @@
       "path" : "/lightstate",
       "rt"   : [ "oic.r.light.dimming" ],
       "if"   : ["oic.if.a", "oic.if.baseline" ],
-      "remove_properties" : [ "rangecd ", "step", "value", "id", "precision" ],
-      "remove_methods" : ["post"]
+      "remove_properties" : [ "range", "step", "value", "id", "precision" ]
     },
     {
       "path" : "/binaryswitch",
